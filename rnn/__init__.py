@@ -6,3 +6,4 @@ from rnn.res_rnn import ResRNN
 from rnn.layer_norm import LayerNorm
 from rnn.res_lstm import ResLSTM
 from rnn.gru import GRU
+from rnn.res_gru import ResGRU

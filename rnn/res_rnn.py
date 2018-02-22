@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import numpy as np
 from rnn.layer_norm import LayerNorm
 
 """
@@ -40,12 +41,12 @@ class ResRNN(nn.Module):
 
         # h weight matrix initialization
         means = torch.zeros(state_size,state_size)
-        rand_matrix = torch.normal(means, std=1/float(torch.sqrt(state_size)))
+        rand_matrix = torch.normal(means, std=1/float(np.sqrt(state_size)))
         self.W_h = nn.Parameter(torch.FloatTensor(rand_matrix), requires_grad=True)
 
         # x weight matrix initialization
         means = torch.zeros(x_size,state_size)
-        rand_matrix = torch.normal(means, std=1/float(torch.sqrt(x_size)))
+        rand_matrix = torch.normal(means, std=1/float(np.sqrt(x_size)))
         self.W_x = nn.Parameter(torch.FloatTensor(rand_matrix), requires_grad=True)
 
         self.bias = nn.Parameter(torch.FloatTensor(torch.zeros(1,state_size)), requires_grad=True)
@@ -54,8 +55,8 @@ class ResRNN(nn.Module):
 
     def forward(self, x, h_prev):
 
-        if self.layer_norm:
-            normed_h = self.LN(h_prev)
-        r = self.tanh(x.mm(self.W_x) + normed_h.mm(self.W_h) + self.bias)
+        if self.layer_norm: h = self.LN(h_prev)
+        else: h = h_prev
+        r = self.tanh(x.mm(self.W_x) + h.mm(self.W_h) + self.bias)
         h = h_prev + r
-        return h
+        return (h,)
