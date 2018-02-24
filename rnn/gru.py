@@ -27,7 +27,7 @@ class GRU(nn.Module):
 
         # Internal GRU Entry Parameters
         means = torch.zeros(3, x_size, state_size)
-        self.W_x1 = nn.Parameter(torch.normal(means, std=1/float(np.sqrt(state_size))), requires_grad=True)
+        self.W_x = nn.Parameter(torch.normal(means, std=1/float(np.sqrt(state_size))), requires_grad=True)
 
         # Internal GRU State Parameters
         means = torch.zeros(3, state_size, state_size)
@@ -46,9 +46,9 @@ class GRU(nn.Module):
         x - New data coming into GRU. FloatTensor Variable with shape (batch_size, state_size)
         """
 
-        z = self.sigmoid(x.mm(self.W_x1[0]) + old_h.mm(self.W_h[0]) + self.b[0])
-        r = self.sigmoid(x.mm(self.W_x1[1]) + old_h.mm(self.W_h[1]) + self.b[1])
-        h = z*old_h + (1-z)*self.tanh(x.mm(self.W_x1[2]) + (r*old_h).mm(self.W_h[2]) + self.b[2])
+        z = self.sigmoid(x.mm(self.W_x[0]) + old_h.mm(self.W_h[0]) + self.b[0])
+        r = self.sigmoid(x.mm(self.W_x[1]) + old_h.mm(self.W_h[1]) + self.b[1])
+        h = z*old_h + (1-z)*self.tanh(x.mm(self.W_x[2]) + (r*old_h).mm(self.W_h[2]) + self.b[2])
         return (h,)
 
     def check_grads(self):
