@@ -1,8 +1,6 @@
 import torch
-from torch.autograd import Variable
 import torch.nn as nn
-import torch.optim as optim
-from rnn.lstm import LSTM
+import numpy as np
 
 """
 Combining the LSTM with concepts from Resisdual RNNs (https://arxiv.org/abs/1701.03360)

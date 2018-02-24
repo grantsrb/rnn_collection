@@ -1,7 +1,5 @@
 import torch
-from torch.autograd import Variable
 import torch.nn as nn
-import torch.optim as optim
 import numpy as np
 from rnn.layer_norm import LayerNorm
 
