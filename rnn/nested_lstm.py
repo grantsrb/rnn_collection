@@ -4,7 +4,7 @@ import numpy as np
 from rnn.lstm import LSTM
 
 """
-Nested LSTM units are very similar to LSTMs but use a nested LSTM for the c term.
+Nested LSTM units are very similar to LSTMs but use a nested LSTM for the c term. See https://arxiv.org/abs/1801.10308.
 Nested LSTMs follow the formulae:
 
 i = sigmoid(x.mm(W_x_i) + old_h.mm(W_h_i) + b_i)
